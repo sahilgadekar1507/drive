@@ -3,6 +3,7 @@ const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const User = require("../models/user.models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.get("/register", (req, res) => {
   res.render("register.views.ejs");
@@ -74,7 +75,17 @@ router.post(
       });
     }
 
-    res.send("logged in!");
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+        username: user.username,
+      },
+      process.env.JWT_SECRET,
+    );
+
+    res.cookie("token", token);
+    res.send("Logged in");
   },
 );
 
