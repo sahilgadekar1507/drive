@@ -16,7 +16,6 @@ app.set("view engine", "ejs");
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 
-
 app.listen(3000, () => {
   console.log("Sever is running on port 3000");
 });
